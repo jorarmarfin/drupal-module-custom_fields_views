@@ -53,9 +53,18 @@ class CountTopycForumField extends FieldPluginBase {
   public function render(ResultRow $values) {
 
     $tid = $this->view->field['tid']->original_value;
-    $query = \Drupal::entityQuery('node')->condition('type', 'forum');
-    $query->condition('taxonomy_forums', [$tid], 'IN');
+    // $query = \Drupal::entityQuery('node')->condition('type', 'forum');
+    // $query->condition('taxonomy_forums', [$tid], 'IN');
+    // $query->condition('parent', $tid);
+
+
+    $query = \Drupal::entityQuery('taxonomy_term')
+      ->condition('parent', $tid);
     $count = $query->count()->execute();
+
+    // $children=Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadChildren($tid);
+
+
     return $count;
   }
 
