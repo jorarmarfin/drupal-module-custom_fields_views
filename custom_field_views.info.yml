@@ -1,6 +1,7 @@
 name: 'Custom Field Views'
 type: module
 description: 'Custom Field Views'
-core: 8.x
+core_version_requirement: ^8.8.0 || ^9
 package: 'Custom'
-version: v.1.0.1
+version: v.1.0.3
+project: 'custom_field_views'

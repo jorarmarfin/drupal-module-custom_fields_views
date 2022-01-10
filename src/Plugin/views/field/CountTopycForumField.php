@@ -12,9 +12,9 @@ use Drupal\views\ResultRow;
  *
  * @ingroup views_field_handlers
  *
- * @ViewsField("arturo_field")
+ * @ViewsField("count_topyc_forum_field")
  */
-class ArturoField extends FieldPluginBase {
+class CountTopycForumField extends FieldPluginBase {
 
   /**
    * {@inheritdoc}
@@ -35,7 +35,7 @@ class ArturoField extends FieldPluginBase {
    */
   protected function defineOptions() {
     $options = parent::defineOptions();
-    $options['nid'] = ['default' => '1'];
+
     $options['hide_alter_empty'] = ['default' => FALSE];
     return $options;
   }
@@ -45,29 +45,18 @@ class ArturoField extends FieldPluginBase {
    */
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
     parent::buildOptionsForm($form, $form_state);
-    $form['nid'] = [
-      '#type' => 'textfield',
-      '#title' => 'nid',
-      '#default_value' => $this->options['nid'],
-      '#size' => 100,
-      '#maxlength' => 255,
-      '#description' => 'Introducir el nombre de machinfile del campo fecha a calcular'
-    ];
   }
 
   /**
    * {@inheritdoc}
    */
   public function render(ResultRow $values) {
-    // Return a random text, here you can include your custom logic.
-    // Include any namespace required to call the method required to generate
-    // the desired output.
-    $nid = $this->options['nid'];
 
-    return [
-      '#theme' => 'my_template',
-      '#test_var' => $nid,
-    ];
+    $tid = $this->view->field['tid']->original_value;
+    $query = \Drupal::entityQuery('node')->condition('type', 'forum');
+    $query->condition('taxonomy_forums', [$tid], 'IN');
+    $count = $query->count()->execute();
+    return $count;
   }
 
 }
