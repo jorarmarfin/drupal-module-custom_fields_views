@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ * Contains custom_field_views.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function custom_field_views_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the custom_field_views module.
+    case 'help.page.custom_field_views':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Custom Field Views') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+function custom_field_views_theme($existing, $type, $theme, $path) {
+
+  return [
+    'my_template' => [
+      'variables' => ['test_var' => NULL],
+    ],
+  ];
+  
+}
+function custom_field_views_entity_presave(Drupal\Core\Entity\EntityInterface $entity) {
+  if ($entity->bundle() == 'personal') {
+
+    $entity->field_token->value = md5($entity->field_email->value);
+ }
+}
