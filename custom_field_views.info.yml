@@ -3,5 +3,5 @@ type: module
 description: 'Custom Field Views'
 core_version_requirement: ^8.8.0 || ^9
 package: 'Custom'
-version: v.1.0.3
+version: 1.0.4
 project: 'custom_field_views'
